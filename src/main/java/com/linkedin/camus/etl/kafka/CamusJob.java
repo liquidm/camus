@@ -351,22 +351,22 @@ public class CamusJob extends Configured implements Tool {
 			}
 		}
 
-		if (!job.isSuccessful()) {
-			JobClient client = new JobClient(
-					new JobConf(job.getConfiguration()));
+		// if (!job.isSuccessful()) {
+		// 	JobClient client = new JobClient(
+		// 			new JobConf(job.getConfiguration()));
 
-			TaskCompletionEvent[] tasks = job.getTaskCompletionEvents(0);
+		// 	TaskCompletionEvent[] tasks = job.getTaskCompletionEvents(0);
 
-			for (TaskReport task : client.getMapTaskReports(tasks[0]
-					.getTaskAttemptId().getJobID())) {
-				if (task.getCurrentStatus().equals(TIPStatus.FAILED)) {
-					for (String s : task.getDiagnostics()) {
-						System.err.println("task error: " + s);
-					}
-				}
-			}
-			throw new RuntimeException("hadoop job failed");
-		}
+		// 	for (TaskReport task : client.getMapTaskReports(tasks[0]
+		// 			.getTaskAttemptId().getJobID())) {
+		// 		if (task.getCurrentStatus().equals(TIPStatus.FAILED)) {
+		// 			for (String s : task.getDiagnostics()) {
+		// 				System.err.println("task error: " + s);
+		// 			}
+		// 		}
+		// 	}
+		// 	throw new RuntimeException("hadoop job failed");
+		// }
 
         if(!errors.isEmpty() && props.getProperty(ETL_FAIL_ON_ERRORS, Boolean.FALSE.toString())
                 .equalsIgnoreCase(Boolean.TRUE.toString())) {

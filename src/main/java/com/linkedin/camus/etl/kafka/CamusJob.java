@@ -339,7 +339,17 @@ public class CamusJob extends Configured implements Tool {
 		log.info("Job finished");
 		stopTiming("commit");
 		stopTiming("total");
-		createReport(job, timingMap);
+		try {
+			createReport(job, timingMap);
+		} catch (Exception e) {
+			log.info("report failed, let's wait a bit and try again");
+			Thread.sleep(30000);
+			try {
+				createReport(job, timingMap);
+			} catch (Exception ee) {
+				log.info("Giving up on " + ee.getMessage());
+			}
+		}
 
 		if (!job.isSuccessful()) {
 			JobClient client = new JobClient(

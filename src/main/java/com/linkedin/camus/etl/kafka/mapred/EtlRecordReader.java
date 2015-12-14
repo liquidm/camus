@@ -232,11 +232,8 @@ public class EtlRecordReader extends RecordReader<EtlKey, CamusWrapper> {
                     Message messageWithoutKey = new Message(bytes);
                     long checksum = key.getChecksum();
                     if (checksum != messageWithKey.checksum() && checksum != messageWithoutKey.checksum()) {
-                        throw new ChecksumException("Invalid message checksum : MessageWithKey : "
-                              + messageWithKey.checksum() + " MessageWithoutKey checksum : "
-                              + messageWithoutKey.checksum()
-                              + ". Expected " + key.getChecksum(),
-                              key.getOffset());
+                        log.info("Invalid message checksum, ignoring. Topic " + key.getTopic() + ": Partition " + key.getPartition() + ", Offset " + key.getOffset());
+                        continue;
                     }
 
                     long tempTime = System.currentTimeMillis();

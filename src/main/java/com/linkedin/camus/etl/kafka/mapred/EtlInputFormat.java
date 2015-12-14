@@ -296,8 +296,7 @@ public class EtlInputFormat extends InputFormat<EtlKey, CamusWrapper> {
                                                     .errorCode()));
 	                        }
 							LeaderInfo leader = new LeaderInfo(new URI("tcp://"
-									+ partitionMetadata.leader()
-											.getConnectionString()),
+									+ partitionMetadata.leader().connectionString()),
 									partitionMetadata.leader().id());
 							if (offsetRequestInfo.containsKey(leader)) {
 								ArrayList<TopicAndPartition> topicAndPartitions = offsetRequestInfo
